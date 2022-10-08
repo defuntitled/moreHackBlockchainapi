@@ -7,11 +7,7 @@ import product
 from db_session import global_init, create_session
 
 app = Flask(__name__)
-from OpenSSL import SSL
 
-context = SSL.Context(SSL.PROTOCOL_TLSv1_2)
-context.use_privatekey_file('server.key')
-context.use_certificate_file('server.crt')
 
 BASE_URL = "https://hackathon.lsp.team/hk"
 API_URL = "/blockchainapi/v1/"
@@ -88,7 +84,7 @@ def sell_nft():
 
 
 @app.route(f"{API_URL}/buy_nft")
-def sell_nft():
+def buy_nft():
     data = request.json
     session = create_session()
     lot = session.query(Product).filter(Product.token_id == data["tokenid"]).first
