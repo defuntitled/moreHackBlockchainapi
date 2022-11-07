@@ -32,6 +32,7 @@ def send_dr():
     return requests.post(f'{BASE_URL}/v1/transfers/ruble', json=params).json()
 
 
+
 @app.route(f'{API_URL}/transaction/matic', methods=["POST"])
 def send_matic():
     data = request.json
@@ -76,9 +77,10 @@ def send_nft():
 
 @app.route(f"{API_URL}/sell_nft")
 def sell_nft():
+    global_init("market.sqlite")
     data = request.json
     session = create_session()
-    session.add(Product(seller_id=data["uid_from"], price=data['price'], token_id=data["token_id"]))
+    session.add(Product(seller_id="test", price=12.3, token_id=12354684.54154))
     session.commit()
     return {"code": 200}
 
@@ -123,5 +125,5 @@ def acsess_err(err):
 
 
 if __name__ == '__main__':
-    global_init("market.sqlite")
-    app.run(ssl_context=context)
+    global_init("postgres")
+    app.run()

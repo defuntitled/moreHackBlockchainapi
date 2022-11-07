@@ -1,0 +1,14 @@
+version: '3.5'
+
+services:
+  marketplase_db:
+    container_name: mp_db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=admin
+    volumes:
+      - .:/docker-entrypoint-initdb.d
+    image: postgres:14.3-alpine

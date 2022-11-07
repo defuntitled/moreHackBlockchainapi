@@ -8,19 +8,16 @@ SqlalchemyBase = dec.declarative_base()
 _factory = None
 
 
-def global_init(db_file: str):
+def global_init(db_name: str):
     global _factory
     if _factory:
         return
-    if not db_file or not db_file.strip():
+    if not db_name or not db_name.strip():
         raise Exception("Database name could be not empty")
-    connect_str = f'sqlite:///{db_file.strip()}?check_same_thread=False'
+    connect_str = f'postgresql+psycopg2://admin:root@localhost:5432/{db_name}'
     print(f"connect to database by url:{connect_str}")
     engine = sa.create_engine(connect_str, echo=False)
     _factory = orm.sessionmaker(bind=engine)
-
-    from . import product
-
     SqlalchemyBase.metadata.create_all(engine)
 
 
